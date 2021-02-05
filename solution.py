@@ -11,24 +11,25 @@ def webServer(port=13331):
        connectionSocket, addr = serverSocket.accept()     #Fill in end
        try:
            message =  connectionSocket.recv(1024)
+           print("this is the message", message)
            filename = message.split()[1]
+           print("this is the filename", filename)
            f = open(filename[1:])
            outputdata = f.read()
            f.close()
-           print(outputdata)
-           connectionSocket.send(b"200 OK")
+           print("this is output data", outputdata)
+           connectionSocket.send("200 OK\r\n".encode())
+           connectionSocket.close()
 
            for i in range(0, len(outputdata)):
                connectionSocket.send(outputdata[i].encode())
 
            connectionSocket.send("\r\n".encode())
            connectionSocket.close()
-           exit()
        except IOError:
       
-           connectionSocket.send(b"404 Not Found")
+           connectionSocket.send("404 Not Found\r\n".encode())
            connectionSocket.close()
-           exit()
 
    serverSocket.close()
    sys.exit()  # Terminate the program after sending the corresponding data
