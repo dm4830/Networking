@@ -11,13 +11,10 @@ def webServer(port=13331):
        connectionSocket, addr = serverSocket.accept()     #Fill in end
        try:
            message =  connectionSocket.recv(1024)
-           print("this is the message", message)
            filename = message.split()[1]
-           print("this is the filename", filename)
            f = open(filename[1:])
            outputdata = f.read()
            f.close()
-           print("this is output data", outputdata)
            connectionSocket.send("200 OK\r\n".encode())
            connectionSocket.close()
 
@@ -32,7 +29,7 @@ def webServer(port=13331):
            connectionSocket.close()
 
    serverSocket.close()
-   sys.exit()  # Terminate the program after sending the corresponding data
+   sys.exit() 
 
 if __name__ == "__main__":
    webServer(13331)
