@@ -1,7 +1,7 @@
 from socket import *
 import sys # In order to terminate the program
 
-def webServer(port=13331):
+def webServer(port=13335):
    serverSocket = socket(AF_INET, SOCK_STREAM)
    serverSocket.bind(("",port))
    serverSocket.listen(1)
@@ -18,9 +18,7 @@ def webServer(port=13331):
            outputdata = f.read()
            ok_resp = 'HTTP/1.1 200 OK\r\n\r\n'
            connectionSocket.send(ok_resp.encode())
-
-           for i in range(0, len(outputdata)):
-               connectionSocket.send(outputdata[i].encode())
+           connectionSocket.sendall(outputdata.encode())
 
            connectionSocket.send("\r\n".encode())
            connectionSocket.close()
@@ -33,4 +31,4 @@ def webServer(port=13331):
    sys.exit() 
 
 if __name__ == "__main__":
-   webServer(13331)
+   webServer(13335)
